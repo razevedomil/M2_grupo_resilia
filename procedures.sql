@@ -80,8 +80,8 @@ BEGIN
 
 	INSERT INTO temp_cursos (nome, descricao, percent_evas, carga_horaria_total)
 	VALUES
-		('Desenvolvimento Web', 'Curso completo de desenvolvimento web','42' , 180),
-		('Data Science', 'Curso abrangente de ciência de dados','15', 200),
+		('Desenvolvimento Web', 'Curso completo de desenvolvimento web','42' , 250),
+		('Data Science', 'Curso abrangente de ciência de dados','15', 150),
 		('Design Gráfico', 'Curso prático de design gráfico','7', 150),
 		('Marketing Digital', 'Curso especializado em marketing online','10', 160),
 		('Gestão de Projetos', 'Curso de gerenciamento de projetos','8', 140);
