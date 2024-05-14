@@ -83,11 +83,6 @@ BEGIN
 		('Design Gráfico', 'Curso prático de design gráfico', 150),
 		('Marketing Digital', 'Curso especializado em marketing online', 160),
 		('Gestão de Projetos', 'Curso de gerenciamento de projetos', 140),
-		('Inteligência Artificial', 'Curso avançado de IA', 220),
-		('Redes de Computadores', 'Curso sobre redes e conectividade', 190),
-		('Programação em Python', 'Curso prático de Python', 120),
-		('Banco de Dados', 'Curso completo de bancos de dados', 170),
-		('Segurança da Informação', 'Curso essencial de segurança cibernética', 200);
 
 	INSERT INTO resilia.Cursos (nome, descricao, carga_horaria_total)
 	SELECT nome, descricao, carga_horaria_total FROM temp_cursos;
@@ -172,8 +167,13 @@ BEGIN
         ('Pedro Santos', 'pedro.santos@empresa.com', '(21) 1234-5678'),
         ('Mariana Costa', 'mariana.costa@empresa.com', '(31) 2468-1357'),
         ('Lucas Oliveira', 'lucas.oliveira@empresa.com', '(41) 9876-5432'),
-        ('Isabela Rodrigues', 'isabela.rodrigues@empresa.com', '(51) 1234-5678');
-	
+        ('Isabela Rodrigues', 'isabela.rodrigues@empresa.com', '(51) 1234-5678'),
+		('Carlos Mendes', 'carlos.mendes@empresa.com', '(61) 9987-6543'),
+		('Juliana Ribeiro', 'juliana.ribeiro@empresa.com', '(71) 9123-4567'),
+		('Roberto Dias', 'roberto.dias@empresa.com', '(81) 9234-5678'),
+		('Fernanda Lima', 'fernanda.lima@empresa.com', '(91) 9345-6789'),
+		('Ricardo Alves', 'ricardo.alves@empresa.com', '(01) 9456-7890');
+
 	INSERT INTO resilia.facilitadores (nome, email, telefone)
     SELECT nome, email, telefone FROM temp_facilitadores;
 	
@@ -211,23 +211,9 @@ BEGIN
 		('Fundamentos de Design Gráfico', 'Conceitos básicos de design visual', 40),
 		('Estratégias de Marketing Online', 'Práticas de marketing digital', 40),
 		('Gerenciamento de Projetos', 'Princípios de gestão de projetos', 40),
-		('Introdução à Inteligência Artificial', 'Conceitos fundamentais de IA', 40),
-		('Fundamentos de Redes', 'Noções básicas sobre redes', 40),
-		('Python Básico', 'Introdução à programação em Python', 40),
-		('Introdução a Bancos de Dados', 'Princípios de bancos de dados', 40),
-		('Fundamentos de Segurança Cibernética', 'Noções básicas de segurança da informação', 40);
 
 	INSERT INTO resilia.Modulos (nome, descricao, carga_horaria)
 	SELECT nome, descricao, carga_horaria FROM temp_modulos;
-	
-	
-	--INSERRI DADOS NA TABELA FACILITADORES_TURMAS
-	INSERT INTO resilia.Facilitadores_Turmas (id_facilitador, id_turma) VALUES
-	(1, 1), (2, 1),
-	(3, 2), (4, 2),
-	(5, 3), (6, 3),
-	(7, 4), (8, 4),
-	(9, 5), (10, 5);
 
 END;
 $$;
