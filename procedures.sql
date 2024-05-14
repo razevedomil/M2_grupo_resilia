@@ -8,6 +8,7 @@ BEGIN
         id_curso SERIAL PRIMARY KEY,
         nome VARCHAR(100),
         descricao TEXT,
+	percent_evas TEXT,
         carga_horaria_total INTEGER
     );
 
@@ -73,19 +74,20 @@ BEGIN
 	CREATE TEMP TABLE IF NOT EXISTS temp_cursos (
     nome varchar,
     descricao varchar,
-    carga_horaria_total int
+    percent_evas,
+	carga_horaria_total int
 );
 
-	INSERT INTO temp_cursos (nome, descricao, carga_horaria_total)
+	INSERT INTO temp_cursos (nome, descricao, percent_evas, carga_horaria_total)
 	VALUES
-		('Desenvolvimento Web', 'Curso completo de desenvolvimento web', 180),
-		('Data Science', 'Curso abrangente de ciência de dados', 200),
-		('Design Gráfico', 'Curso prático de design gráfico', 150),
-		('Marketing Digital', 'Curso especializado em marketing online', 160),
-		('Gestão de Projetos', 'Curso de gerenciamento de projetos', 140);
+		('Desenvolvimento Web', 'Curso completo de desenvolvimento web','42' , 180),
+		('Data Science', 'Curso abrangente de ciência de dados','15', 200),
+		('Design Gráfico', 'Curso prático de design gráfico','7', 150),
+		('Marketing Digital', 'Curso especializado em marketing online','10', 160),
+		('Gestão de Projetos', 'Curso de gerenciamento de projetos','8', 140);
 
-	INSERT INTO resilia.Cursos (nome, descricao, carga_horaria_total)
-	SELECT nome, descricao, carga_horaria_total FROM temp_cursos;
+	INSERT INTO resilia.Cursos (nome, descricao, percent_evas, carga_horaria_total)
+	SELECT nome, descricao, percent_evas, carga_horaria_total FROM temp_cursos;
 
 	--INSERIR DADOS DOS ALUNOS
     CREATE TEMP TABLE IF NOT EXISTS temp_alunos (
