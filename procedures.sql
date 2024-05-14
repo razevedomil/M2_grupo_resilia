@@ -149,7 +149,11 @@ BEGIN
 		('Quiteria Silva', 'quiteria@email.com', '1988-04-22', '(72) 7777-8888', 'Ativo'),
 		('Rafael Souza', 'rafael_souza@email.com', '1998-01-10', '(82) 8888-9999', 'Ativo'),
 		('Sandra Fernandes', 'sandra@email.com', '1981-05-12', '(92) 9999-0000', 'Ativo'),
-		('Thiago Oliveira', 'thiago@email.com', '1992-06-08', '(02) 0000-1111', 'Ativo');
+		('Thiago Oliveira', 'thiago@email.com', '1992-06-08', '(02) 0000-1111', 'Ativo'),
+	    	('Robson Azevedo', 'r.azevedo@email.com', '1950-01-01', '(02) 0000-1181', 'Evasivo'),
+		('Herbert Bitcoin', 'Herbert@email.com', '1949-01-01', '(02) 0000-1116', 'Evasivo'),
+		('Marlon ', 'marlon@email.com', '1948-01-01', '(02) 0000-1411', 'Evasivo'),
+		('Pedro', 'Pedro@email.com', '1947-01-01', '(02) 0000-1121', 'Evasivo');
 
     INSERT INTO resilia.alunos (nome, email, data_nascimento, telefone, status)
     SELECT nome, email, data_nascimento, telefone, status FROM temp_alunos;
