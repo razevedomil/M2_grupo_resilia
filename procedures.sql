@@ -1,9 +1,73 @@
+CREATE SCHEMA resilia;
+CREATE OR REPLACE PROCEDURE resilia.criar_tabelas_resilia()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    -- Criando a tabela Cursos no esquema "resilia"
+    CREATE TABLE IF NOT EXISTS resilia.Cursos (
+        id_curso SERIAL PRIMARY KEY,
+        nome VARCHAR(100),
+        descricao TEXT,
+        carga_horaria_total INTEGER
+    );
+
+    -- Criando a tabela Módulos no esquema "resilia"
+    CREATE TABLE IF NOT EXISTS resilia.Modulos (
+        id_modulo SERIAL PRIMARY KEY,
+        nome VARCHAR(100),
+        descricao TEXT,
+        carga_horaria INTEGER,
+        id_curso INTEGER REFERENCES resilia.Cursos(id_curso)
+    );
+
+    -- Criando a tabela Turmas no esquema "resilia"
+    CREATE TABLE IF NOT EXISTS resilia.Turmas (
+        id_turma SERIAL PRIMARY KEY,
+        nome VARCHAR(100),
+        data_inicio DATE,
+        data_termino DATE,
+        id_curso INTEGER REFERENCES resilia.Cursos(id_curso)
+    );
+
+    -- Criando a tabela Alunos no esquema "resilia"
+    CREATE TABLE IF NOT EXISTS resilia.Alunos (
+        id_aluno SERIAL PRIMARY KEY,
+        nome VARCHAR(100),
+        email VARCHAR(100),
+        data_nascimento DATE,
+        telefone VARCHAR(20),
+        status VARCHAR(20)
+    );
+
+    -- Criando a tabela Facilitadores no esquema "resilia"
+    CREATE TABLE IF NOT EXISTS resilia.Facilitadores (
+        id_facilitador SERIAL PRIMARY KEY,
+        nome VARCHAR(100),
+        email VARCHAR(100),
+        telefone VARCHAR(20)
+    );
+
+    -- Criando tabela de relacionamento Alunos_Turmas no esquema "resilia"
+    CREATE TABLE IF NOT EXISTS resilia.Alunos_Turmas (
+        id_aluno INTEGER REFERENCES resilia.Alunos(id_aluno),
+        id_turma INTEGER REFERENCES resilia.Turmas(id_turma),
+        PRIMARY KEY (id_aluno, id_turma)
+    );
+
+    -- Criando tabela de relacionamento Facilitadores_Turmas no esquema "resilia"
+    CREATE TABLE IF NOT EXISTS resilia.Facilitadores_Turmas (
+        id_facilitador INTEGER REFERENCES resilia.Facilitadores(id_facilitador),
+        id_turma INTEGER REFERENCES resilia.Turmas(id_turma),
+        PRIMARY KEY (id_facilitador, id_turma)
+    );
+END;
+$$;
+
+
 CREATE OR REPLACE PROCEDURE resilia.inserir_dados()
 LANGUAGE plpgsql
 AS $$
 BEGIN
-
-
 	--INSERIR DADOS DO CURSO:
 	CREATE TEMP TABLE IF NOT EXISTS temp_cursos (
     nome varchar,
@@ -107,12 +171,7 @@ BEGIN
         ('Pedro Santos', 'pedro.santos@empresa.com', '(21) 1234-5678'),
         ('Mariana Costa', 'mariana.costa@empresa.com', '(31) 2468-1357'),
         ('Lucas Oliveira', 'lucas.oliveira@empresa.com', '(41) 9876-5432'),
-        ('Isabela Rodrigues', 'isabela.rodrigues@empresa.com', '(51) 1234-5678'),
-        ('Rafaela Almeida', 'rafaela.almeida@empresa.com', '(61) 2468-1357'),
-        ('Gustavo Pereira', 'gustavo.pereira@empresa.com', '(71) 1357-2468'),
-        ('Fernanda Souza', 'fernanda.souza@empresa.com', '(81) 7654-3210'),
-        ('Diego Lima', 'diego.lima@empresa.com', '(91) 2345-6789'),
-        ('Camila Ferreira', 'camila.ferreira@empresa.com', '(99) 8765-4321');
+        ('Isabela Rodrigues', 'isabela.rodrigues@empresa.com', '(51) 1234-5678');
 	
 	INSERT INTO resilia.facilitadores (nome, email, telefone)
     SELECT nome, email, telefone FROM temp_facilitadores;
@@ -131,12 +190,7 @@ BEGIN
 		('Turma Data Science', '2024-08-01', '2024-09-30'),
 		('Turma Design Gráfico', '2024-09-01', '2024-10-31'),
 		('Turma Marketing Digital', '2024-10-01', '2024-11-30'),
-		('Turma Gestão de Projetos', '2024-11-01', '2024-12-31'),
-		('Turma Inteligência Artificial', '2024-12-01', '2025-01-31'),
-		('Turma Redes de Computadores', '2025-01-01', '2025-02-28'),
-		('Turma Programação em Python', '2025-02-01', '2025-03-31'),
-		('Turma Banco de Dados', '2025-03-01', '2025-04-30'),
-		('Turma Segurança da Informação', '2025-04-01', '2025-05-31');
+		('Turma Gestão de Projetos', '2024-11-01', '2024-12-31');
 
 	INSERT INTO resilia.turmas (nome, data_inicio, data_termino)
 	SELECT nome, data_inicio, data_termino FROM temp_turmas;
@@ -166,70 +220,23 @@ BEGIN
 	SELECT nome, descricao, carga_horaria FROM temp_modulos;
 
 
-END;
-$$;
 
+		--INSERIR DADOS NA TABELA ALUNOS_TURMAS
+	INSERT INTO resilia.Alunos_Turmas (id_aluno, id_turma) VALUES
+    (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1),
+    (11, 2), (12, 2), (13, 2), (14, 2), (15, 2), (16, 2), (17, 2), (18, 2), (19, 2), (20, 2),
+    (21, 3), (22, 3), (23, 3), (24, 3), (25, 3), (26, 3), (27, 3), (28, 3), (29, 3), (30, 3),
+    (31, 4), (32, 4), (33, 4), (34, 4), (35, 4), (36, 4), (37, 4), (38, 4), (39, 4), (40, 4),
+    (41, 5), (42, 5), (43, 5), (44, 5), (45, 5), (46, 5), (47, 5), (48, 5), (49, 5), (50, 5);
+	
+	
+	--INSERRI DADOS NA TABELA FACILITADORES_TURMAS
+	INSERT INTO resilia.Facilitadores_Turmas (id_facilitador, id_turma) VALUES
+	(1, 1), (2, 1),
+	(3, 2), (4, 2),
+	(5, 3), (6, 3),
+	(7, 4), (8, 4),
+	(9, 5), (10, 5);
 
-CREATE OR REPLACE PROCEDURE resilia.criar_tabelas_resilia()
-LANGUAGE plpgsql
-AS $$
-BEGIN
-    -- Criando a tabela Cursos no esquema "resilia"
-    CREATE TABLE IF NOT EXISTS resilia.Cursos (
-        id_curso SERIAL PRIMARY KEY,
-        nome VARCHAR(100),
-        descricao TEXT,
-        carga_horaria_total INTEGER
-    );
-
-    -- Criando a tabela Módulos no esquema "resilia"
-    CREATE TABLE IF NOT EXISTS resilia.Modulos (
-        id_modulo SERIAL PRIMARY KEY,
-        nome VARCHAR(100),
-        descricao TEXT,
-        carga_horaria INTEGER,
-        id_curso INTEGER REFERENCES resilia.Cursos(id_curso)
-    );
-
-    -- Criando a tabela Turmas no esquema "resilia"
-    CREATE TABLE IF NOT EXISTS resilia.Turmas (
-        id_turma SERIAL PRIMARY KEY,
-        nome VARCHAR(100),
-        data_inicio DATE,
-        data_termino DATE,
-        id_curso INTEGER REFERENCES resilia.Cursos(id_curso)
-    );
-
-    -- Criando a tabela Alunos no esquema "resilia"
-    CREATE TABLE IF NOT EXISTS resilia.Alunos (
-        id_aluno SERIAL PRIMARY KEY,
-        nome VARCHAR(100),
-        email VARCHAR(100),
-        data_nascimento DATE,
-        telefone VARCHAR(20),
-        status VARCHAR(20)
-    );
-
-    -- Criando a tabela Facilitadores no esquema "resilia"
-    CREATE TABLE IF NOT EXISTS resilia.Facilitadores (
-        id_facilitador SERIAL PRIMARY KEY,
-        nome VARCHAR(100),
-        email VARCHAR(100),
-        telefone VARCHAR(20)
-    );
-
-    -- Criando tabela de relacionamento Alunos_Turmas no esquema "resilia"
-    CREATE TABLE IF NOT EXISTS resilia.Alunos_Turmas (
-        id_aluno INTEGER REFERENCES resilia.Alunos(id_aluno),
-        id_turma INTEGER REFERENCES resilia.Turmas(id_turma),
-        PRIMARY KEY (id_aluno, id_turma)
-    );
-
-    -- Criando tabela de relacionamento Facilitadores_Turmas no esquema "resilia"
-    CREATE TABLE IF NOT EXISTS resilia.Facilitadores_Turmas (
-        id_facilitador INTEGER REFERENCES resilia.Facilitadores(id_facilitador),
-        id_turma INTEGER REFERENCES resilia.Turmas(id_turma),
-        PRIMARY KEY (id_facilitador, id_turma)
-    );
 END;
 $$;
