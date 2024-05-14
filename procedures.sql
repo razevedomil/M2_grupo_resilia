@@ -82,7 +82,7 @@ BEGIN
 		('Data Science', 'Curso abrangente de ciência de dados', 200),
 		('Design Gráfico', 'Curso prático de design gráfico', 150),
 		('Marketing Digital', 'Curso especializado em marketing online', 160),
-		('Gestão de Projetos', 'Curso de gerenciamento de projetos', 140),
+		('Gestão de Projetos', 'Curso de gerenciamento de projetos', 140);
 
 	INSERT INTO resilia.Cursos (nome, descricao, carga_horaria_total)
 	SELECT nome, descricao, carga_horaria_total FROM temp_cursos;
@@ -210,10 +210,30 @@ BEGIN
 		('Introdução à Ciência de Dados', 'Princípios essenciais de data science', 40),
 		('Fundamentos de Design Gráfico', 'Conceitos básicos de design visual', 40),
 		('Estratégias de Marketing Online', 'Práticas de marketing digital', 40),
-		('Gerenciamento de Projetos', 'Princípios de gestão de projetos', 40),
+		('Gerenciamento de Projetos', 'Princípios de gestão de projetos', 40);
 
 	INSERT INTO resilia.Modulos (nome, descricao, carga_horaria)
 	SELECT nome, descricao, carga_horaria FROM temp_modulos;
 
+END;
+$$;
+
+
+-- CRIAR PROCEDURE PARA INSERIR DADOS DE RELACIONAMENTO(aluno_turma,facilitador_turma)
+CREATE OR REPLACE PROCEDURE resilia.inserir_relacionamentos()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    -- Inserir dados na tabela Alunos_Turmas
+    INSERT INTO resilia.Alunos_Turmas (id_aluno, id_turma) VALUES
+    (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1),
+    (11, 2), (12, 2), (13, 2), (14, 2), (15, 2), (16, 2), (17, 2), (18, 2), (19, 2), (20, 2),
+    (21, 3), (22, 3), (23, 3), (24, 3), (25, 3), (26, 3), (27, 3), (28, 3), (29, 3), (30, 3),
+    (31, 4), (32, 4), (33, 4), (34, 4), (35, 4), (36, 4), (37, 4), (38, 4), (39, 4), (40, 4),
+    (41, 5), (42, 5), (43, 5), (44, 5), (45, 5), (46, 5), (47, 5), (48, 5), (49, 5), (50, 5);
+
+    -- Inserir dados na tabela Facilitadores_Turmas
+    INSERT INTO resilia.Facilitadores_Turmas (id_facilitador, id_turma) VALUES
+    (1, 1), (2, 2), (3, 3), (4, 4), (5, 5);
 END;
 $$;
